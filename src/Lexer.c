@@ -1,11 +1,8 @@
 #include "../include/Lexer.h"
 
 #include <stdlib.h>
-
 #include <stdio.h>
-
 #include <ctype.h>
-
 #include <string.h>
 
 lexer_T *init_lexer(char *contents) {
