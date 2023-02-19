@@ -1,7 +1,7 @@
 NOTE:
-
 Một ngôn ngữ lập trình cần có:
-        + Lexer:  "lexer" sẽ chia string thành các list token nhỏ khác nhau.
-        + Token:  "token" sẽ là một đơn vị nhỏ của một ngôn ngữ. Một "token" có thể là một variable, một function, một operator, hoặc một con số.
-        + Parser: "parser" sẽ một trình phân tích cú pháp.
-        + AST:    "ast".
+        + Lexer:   "Lexer" sẽ chia string thành các list token nhỏ khác nhau.
+        + Token:   "Token" sẽ là một đơn vị nhỏ của một ngôn ngữ. Một "token" có thể là một variable, một function, một operator, hoặc một con số.
+        + Parser:  "Parser" sẽ một trình phân tích cú pháp.
+        + AST:     "ABSTRACT SYNTAX TREE" hay còn gọi là cây cú pháp trừu tượng, sẽ chứa các Node (biến, toán tử, Null, etc)
+        + VISITOR: "VISITOR"
