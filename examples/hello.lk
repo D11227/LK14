@@ -1,4 +1,4 @@
 LK hey = "Hello World";
 LK banana = "HEHE";
 
-LK14(hey, banana);
+LK14ln(hey);

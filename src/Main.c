@@ -1,15 +1,21 @@
 #include "../include/Lexer.h"
 #include "../include/Parser.h"
 #include "../include/Visitor.h"
+#include "../include/IO.h"
 
 #include <stdio.h>
 
+void print_help() {
+        printf("Usage:\n ./LK14 <filename>\n");
+        exit(1);
+}
+
 int main(int argc, char const *argv[]) {
+        if (argc < 2)
+                print_help();
         lexer_T *lexer = init_lexer(
-                "LK name3 = \"huh?\";\n"
-                "LK name2 = \"Banana\";\n"
-                "LK14(name3, name2);"
-	);
+                get_file_content(argv[1])
+        );
 
         parser_T* parser = init_parser(lexer);
         AST_T* root = parser_parse(parser);

@@ -1,5 +1,5 @@
 CC	:= gcc
-exec 	:= test.out
+exec 	:= LK14
 sources := $(wildcard src/*.c)
 objects := $(sources:.c=.o)
 flags 	:= -g
@@ -15,6 +15,6 @@ install:
 	cp ./hello.out /usr/local/bin/silver
 
 clean:
-	-rm *.out
+	-rm $(exec)
 	-rm *.o
 	-rm src/*o

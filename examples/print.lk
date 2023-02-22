@@ -1,0 +1,5 @@
+LK14ln("Hello World!");
+
+LK name = "Thanh Duy";
+
+LK14ln(name, " is the best!");
