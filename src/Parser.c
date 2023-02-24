@@ -18,7 +18,7 @@ void parser_eat(parser_T* parser, int token_type) {
                 parser->current_token = lexer_get_next_token(parser->lexer);
         } else {
                 printf(
-                        "Unexpected token '%s', with type %d\n",
+                        "[Compilation Error]: \033[1;32mUnexpected token '%s', with type %d\033[0m \n",
                         parser->current_token->value,
                         parser->current_token->type
                 );
@@ -67,6 +67,7 @@ AST_T* parser_parse_statements(parser_T* parser) {
 AST_T* parser_parse_expr(parser_T* parser) {
         switch (parser->current_token->type) {
                 case TOKEN_STRING: return parser_parse_string(parser);
+                case TOKEN_INT: return parser_parse_number(parser);
                 case TOKEN_ID: return parser_parse_id(parser);
         }
 
@@ -141,6 +142,14 @@ AST_T* parser_parse_string(parser_T* parser) {
         parser_eat(parser, TOKEN_STRING);
 
         return ast_string;
+}
+
+AST_T* parser_parse_number(parser_T* parser) {
+        AST_T* ast_int = init_ast(AST_INT);
+        ast_int->int_value = atoi(parser->current_token->value);
+        parser_eat(parser, TOKEN_INT);
+
+        return ast_int;
 }
 
 AST_T* parser_parse_id(parser_T* parser) {

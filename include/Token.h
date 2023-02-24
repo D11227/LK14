@@ -6,6 +6,7 @@ typedef struct TOKEN_STRUCT {
                 TOKEN_ID,
                 TOKEN_EQUALS,
                 TOKEN_STRING,
+                TOKEN_INT,
                 TOKEN_SEMI,
                 TOKEN_LPAREN,
                 TOKEN_RPAREN,

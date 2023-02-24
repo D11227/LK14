@@ -1,5 +1,5 @@
 LK14ln("Hello World!");
 
-LK name = "Thanh Duy";
+LK name = 1;
 
-LK14ln(name, " is the best!");
+LK14ln(LK14_min(3, 4));

@@ -22,18 +22,44 @@ void lexer_advance(lexer_T *lexer) {
         }
 }
 
+char lexer_peek(lexer_T *lexer, int offset) {
+        return lexer->contents[lexer->i + offset];
+}
+
 void lexer_skip_whitespace(lexer_T *lexer) {
         while (lexer->c == ' ' || lexer->c == '\n') {
                 lexer_advance(lexer);
         }
 }
 
+void lexer_skip_comment(lexer_T *lexer) {
+        if (lexer->c == '#') {
+                while (lexer->c != '\n')
+                        lexer_advance(lexer);
+        }
+        else if (lexer->c == '/' && lexer_peek(lexer, 1) == '*') {
+                while (1) {
+                        if (lexer->c == '*' && lexer_peek(lexer, 1) == '/') {
+                                lexer_advance(lexer);
+                                lexer_advance(lexer);
+                                break;
+                        }
+                        lexer_advance(lexer);
+                }
+        }
+}
+
+#define isValidCharacter(c) (isalnum(c) || c == '_')
+
 token_T *lexer_get_next_token(lexer_T *lexer) {
         while (lexer->c != '\0' && lexer->i < strlen(lexer->contents)) {
-                if (lexer->c == ' ' || lexer->c == '\n')
-                        lexer_skip_whitespace(lexer);
+                lexer_skip_whitespace(lexer);
+                lexer_skip_comment(lexer);
 
-                if (isalnum(lexer->c))
+                if (isdigit(lexer->c))
+                        return lexer_collect_number(lexer);
+
+                if (isValidCharacter(lexer->c))
                         return lexer_collect_id(lexer);
 
                 if (lexer->c == '"')
@@ -70,11 +96,26 @@ token_T *lexer_collect_string(lexer_T* lexer) {
         return init_token(TOKEN_STRING, value);
 }
 
+token_T* lexer_collect_number(lexer_T* lexer) {
+        char *value = calloc(1, sizeof(char));
+        value[0] = '\0';
+
+        while (isdigit(lexer->c)) {
+                char *s = lexer_get_current_char_as_string(lexer);
+                value = realloc(value, (strlen(value) + strlen(s) + 1) * sizeof(char));
+                strcat(value, s);
+
+                lexer_advance(lexer);
+        }
+
+        return init_token(TOKEN_INT, value);
+}
+
 token_T *lexer_collect_id(lexer_T* lexer) {
         char *value = calloc(1, sizeof(char));
         value[0] = '\0';
 
-        while (isalnum(lexer->c)) {
+        while (isValidCharacter(lexer->c)) {
                 char *s = lexer_get_current_char_as_string(lexer);
                 value = realloc(value, (strlen(value) + strlen(s) + 1) * sizeof(char));
                 strcat(value, s);

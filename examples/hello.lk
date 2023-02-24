@@ -1,4 +1,1 @@
-LK hey = "Hello World";
-LK banana = "HEHE";
-
-LK14ln(hey);
+LK14ln("Hello World!");
